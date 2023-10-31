@@ -1,0 +1,53 @@
+.top-nav {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 23%;
+  height: 60px;
+  background: var(--secondary-color);
+  box-shadow: 0 2px 5px var(--gray-color);
+  padding: 0 20px;
+}
+.top-nav-right {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.top-nav .fa-user {
+  background-color: var(--gray-color);
+  border-radius: 100%;
+  padding: 12px;
+}
+.wallet-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+i {
+  cursor: pointer;
+}
+.top-nav-left p {
+  cursor: pointer;
+}
+.top-nav-right .bell-icon{
+    position: relative;
+    cursor: pointer;
+}
+.top-nav-right .red-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  top: 2px;
+  left: 8px;
+}
+@media (max-width: 768px) {
+  .top-nav {
+    width: 100%;
+  }
+}

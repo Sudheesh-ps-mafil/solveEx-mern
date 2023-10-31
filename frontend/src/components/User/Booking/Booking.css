@@ -1,0 +1,96 @@
+.booking-container{
+    margin:80px 0;
+    position: relative;
+}
+.booking-search{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    position: fixed;
+    z-index: 100;
+}
+.booking-search input{
+    background-color: var(--primary-color);
+    outline:none;
+    border:none;
+    color:var(--white-color);
+}
+.booking-search-left {
+    color: var(--gray-color-light);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.booking-search-container{
+    display: flex;
+    align-items: center;
+
+    height: 40px;
+    padding: .15rem 2rem;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+  
+}
+
+.booking-card-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+    padding-top: 50px;
+}
+.booking-card{
+    width:90% ;
+    background-color: var(--primary-color);
+    height: 350px;
+   border-radius: 10px;
+   position: relative;
+   box-shadow: 8px 6px 20px 0px rgba(40, 39, 39, 0.195);
+   transition: all .4s ease-in-out;
+}
+.booking-card:hover{
+    transform: scale(.98);
+}
+.booking-card img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+.booking-button{
+    display: flex;
+    align-items:flex-end;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+.booking-button button{
+    width: 95%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--tertiary-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+    color:var(--black-color);
+    transition: all .4s ease-in-out;
+}
+.booking-button button:hover{
+    background-color: var(--white-color);
+    transform: scale(.98);
+}
+.booking-cashback{
+    font-size: .8rem;
+    color:var(--tertiary-color);
+}
+.booking-title, .booking-price,.booking-cashback{
+    margin: 5px 10px;
+}

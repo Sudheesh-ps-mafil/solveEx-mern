@@ -1,0 +1,30 @@
+.bottom-nav{
+    position:fixed;
+    z-index:100;
+    bottom: 0;
+    display: flex;
+    width: 23%;
+    height: 60px;
+    background: var(--secondary-color);
+    box-shadow: 0 2px 5px var(--gray-color);
+    color:var(--tertiary-color)
+
+}
+.booking,.wallet{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid var(--gray-color);
+   gap: 10px;
+   cursor: pointer;
+}
+.booking{
+    border-right: 2px solid var(--gray-color);
+}
+@media  (max-width: 768px) {
+    .bottom-nav{
+
+        width: 100%;
+    }
+  }

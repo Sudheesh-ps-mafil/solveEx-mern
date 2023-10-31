@@ -1,0 +1,119 @@
+.logo img{
+    width: 100%;
+    height:250px;
+    object-fit: cover;
+    border-bottom-left-radius: 150px;
+}
+.login{
+    position: relative;
+}
+.login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    
+}
+.phone-login{
+    margin-top:30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.phone-login p{
+    font-size: 18px;
+}
+.login-input{
+    width: 280px;
+    height: 50px;
+    background-color: var(--secondary-color);
+    outline: none;
+    border: 2px solid var(--border-color) ;
+    border-radius: 50px;
+    padding: 0 20px;
+  color: var(--white-color);
+}
+.phone-login button{
+    margin-top:30px;
+    width: 280px;
+    height: 50px;
+    background-color: var(--tertiary-color);
+    outline: none;
+    border: none;
+    border-radius: 50px;
+    color: var(--black-color);
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.phone-login button:hover{
+    background-color: var(--light-color);
+    color: var(--black-color);
+}
+.google-login{
+    margin-top:10px;
+}
+.google-button {
+    max-width: 320px;
+    display: flex;
+    padding: 0.5rem 1.4rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    gap: 0.75rem;
+    color: var(--black-color);
+    background-color: #fff;
+    cursor: pointer;
+    transition: all .6s ease;
+  }
+  
+  .google-button svg {
+    height: 24px;
+  }
+  
+  .google-button:hover {
+    transform: scale(1.02);
+  }
+  .divider{
+    width: 80%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 20px 0;
+    gap:10px;
+  }
+  .divider .line{
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+  }
+  .divider .or{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-color);
+  }
+  .text-logo{
+   position: absolute;
+   top: 40px;
+    right: 10px;
+  }
+  .text-logo p{
+    font-size: 2rem;
+  }
+  .back-arrow{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+  }
+  .back-arrow i {
+    font-size: 1.8rem;
+    color: var(--text-color);
+  }

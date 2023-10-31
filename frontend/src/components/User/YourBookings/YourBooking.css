@@ -1,0 +1,100 @@
+.your-booking-container{
+    width: 100%;
+    margin: 80px 0;
+    position: relative;
+}
+.your-booking{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.your-booking-container .back-arrow{
+    position: absolute;
+    top:0px;
+    left: 10px;
+}
+.your-booking-container .back-arrow i{
+    font-size:1.5rem;
+    color: var(--gray-color-light);
+}
+.booking-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    padding-top:50px;
+}
+.booking-header p{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.your-booking-card{
+    width: 90%;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    background-color:var(--primary-color);
+    font-size:.8rem;
+    flex-direction: column;
+}
+.your-booking-card-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.your-booking-card img{
+    width:100%;
+    object-fit: cover;
+
+}
+.your-booking-card-right .coupon-code{
+   width: 100%;
+    height:50px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tertiary-color);
+    color: var(--black-color);
+    border-radius:5px;
+    margin: 10px 0;
+}
+.your-booking-card-right button{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color:rgb(232, 47, 47);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.model button{
+
+    padding: 10px 60px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 30px;
+}
+.model p{
+    color:var(--black-color);
+    padding: 10px;
+}
+.btn-danger{
+    background-color: rgb(243, 81, 81);
+    color:var(--black-color);
+}
+.btn-success{
+    background-color: rgb(54, 225, 54);
+    color:var(--black-color);
+}
