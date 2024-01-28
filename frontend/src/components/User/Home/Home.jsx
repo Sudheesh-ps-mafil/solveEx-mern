@@ -19,6 +19,7 @@ function Home() {
      const newToken = await getToken(messaging, {vapidKey: "BHwPcMzoW0Bv8lPTjj20Wx8ZaxOkx8NXUfSz7yiRWFPH7D0vY5xRjnEWb-aALPtjdBYIAXiIH1aStQMVlobLVXs"});
      console.log(newToken);
       setToken(newToken);
+      localStorage.setItem("notification-token", newToken);
       axios.post(SERVER_URL + "/user/notification", {
         token: newToken,
       },{

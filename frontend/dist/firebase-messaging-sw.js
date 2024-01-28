@@ -1,7 +1,5 @@
 importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js");
-importScripts('https://www.gstatic.com/firebasejs/<v9+>/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/<v9+>/firebase-messaging-compat.js');
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
     apiKey: "AIzaSyB9W0_wxh7tUDHEvFULuxGeBErzfAPwM8w",
