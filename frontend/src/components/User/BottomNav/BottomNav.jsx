@@ -7,11 +7,11 @@ function BottomNav() {
     <>
       <div className="bottom-nav">
         <div className="booking"  onClick={()=>navigate("/booking")}>
-        <i class="fa-solid fa-book"></i>
+        <i className="fa-solid fa-book"></i>
             <p>Booking</p>
         </div>
         <div className="wallet"  onClick={()=>navigate("/wallet")}>
-        <i class="fa-solid fa-wallet"></i>
+        <i className="fa-solid fa-wallet"></i>
             <p>Wallet</p>
         </div>
       </div>

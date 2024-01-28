@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 const Item = require('../models/Item');
 const CashBack = require('../models/CashBack');
+const Notification   = require('../models/Notification');
 const jwt = require('jsonwebtoken'); // Ensure that the jwt module is properly imported
 const userAuth = require('../middleware/userAuth');
 
@@ -294,5 +295,19 @@ router.post('/add-redeem-code', userAuth, async (req, res) => {
     }
   });
   
+router.post("/notification",userAuth, async (req, res) => {
+    try {
+      const { token} = req.body;
+      const notification = await Notification.findOne({ token:token  }); 
+      if(!notification){
+        const notification = await Notification.create({ token: token, userId: req.user.userId });
+        res.status(200).json({ notification });
+      }else{
+        res.status(200).json({ notification });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  });
   
 module.exports = router;

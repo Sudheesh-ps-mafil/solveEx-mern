@@ -13,7 +13,12 @@ import { ToastContainer } from "react-toastify";
 import AdminLogin from "./components/Admin/AdminLogin/AdminLogin";
 import AdminDashboard from "./components/Admin/AdminDashboard/AdminDashboard";
 import AdminCashbackCode from "./components/Admin/AdminCashbackCode/AdminCashbackCode";
+import AdminNotification from './components/Admin/AdminNotification/AdminNotification';
+
+
 function App() {
+
+
   return (
     <>
       <Routes>
@@ -31,6 +36,7 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin/>} />
         <Route path="/admin/dashboard" element={<AdminDashboard/>} />
         <Route path="/admin/redeem-code" element={<AdminCashbackCode/>} />
+        <Route path="/admin/notification" element={<AdminNotification/>} />
       </Routes>
       <ToastContainer/>
     </>

@@ -35,7 +35,7 @@ function Profile() {
                     }
                   }
                   ).catch(()=>{
-                    localStorage.removeItem("token");
+                  console.log("error")
 
                 })
               }

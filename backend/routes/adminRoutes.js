@@ -8,7 +8,10 @@ const adminAuth = require('../middleware/adminAuth');
 const Item = require('../models/Item');
 const CashBack = require('../models/CashBack');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
+const NotificationList = require('../models/NotificationList');
 const jwtSecret = process.env.ADMIN_JWT_SECRET
+const multer = require("multer");
 
 // Register
 router.post('/register', async (req, res) => {
@@ -354,5 +357,84 @@ router.post("/verify-redeem-code",adminAuth,async(req,res)=>{
     res.status(500).json({ message: 'Internal Server Error' });
   }
 })
+const OneStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // destination is used to specify the path of the directory in which the files have to be stored
+    cb(null, "./public/OneImage");
+  },
+  filename: function (req, file, cb) {
+    // It is the filename that is given to the saved file.
+    const uniqueSuffix =Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+    console.log(`${uniqueSuffix}-${file.originalname}`);
+    // console.log(file);
+  },
+});
 
+// Configure storage engine instead of dest object.
+const OneImage = multer({
+  storage: OneStorage,
+  limits: {
+    fileSize: 20 * 1024 * 1024, // 20MB in bytes
+  },
+});
+router.post("/send-notification",OneImage.single('image'),adminAuth,async(req,res)=>{
+  try {
+    const { title, url } = req.body;
+    const imageObj = req.file;
+
+    // Retrieve all tokens from the Notification model
+    const allTokens = await Notification.find().distinct('token');
+    if (!allTokens) {
+        throw new Error('No tokens found');
+    }
+
+    // Build the payload
+    const payload = {
+        registration_ids: allTokens,
+        notification: {
+            body: title,
+            title: "RTouch",
+            android_channel_id: "rtouch"
+        },
+        data: {
+            url: url,
+        },
+    };
+
+    // Add image property to data if imageObj exists
+    if (imageObj) {
+        payload.notification.image = `${process.env.DOMAIN}/OneImage/${imageObj.filename}`;
+    }
+
+    console.log(JSON.stringify(payload));
+
+    const result = await fetch('https://fcm.googleapis.com/fcm/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `key=${process.env.FIREBASE_SERVER_KEY}`,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const data = await result.json();
+
+    // Check for errors in the HTTP response
+    if (!result.ok) {
+        throw new Error(`FCM request failed with status ${result.status}: ${data}`);
+    }
+
+    const date = new Date().toString().trim("T");
+
+    // Use Promise.all to await both the fetch and the creation of NotificationList concurrently
+    await Promise.all([
+        NotificationList.create({ title: title, image: imageObj ? `${process.env.DOMAIN}/OneImage/${imageObj.filename}` : null, url: url, date: date }),
+        res.status(200).json({ message: 'Notification sent successfully', data }),
+    ]);
+} catch (error) {
+    console.error('Error sending message:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+}
+})
 module.exports = router;

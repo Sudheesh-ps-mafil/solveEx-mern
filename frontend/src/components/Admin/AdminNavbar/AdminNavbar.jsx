@@ -19,6 +19,9 @@ function AdminNavbar() {
             <li>
                 <Link to="/admin/bookings">Bookings</Link>
             </li>
+            <li>
+                <Link to="/admin/notification">Notifiaction</Link>
+            </li>
         </ul>
         <i onClick={()=>setShow((prev)=>!prev)} className="fa-solid fa-bars"></i>
       </div>

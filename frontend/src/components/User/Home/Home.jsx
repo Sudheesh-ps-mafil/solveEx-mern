@@ -6,9 +6,34 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SERVER_URL from "../../../config/SERVER_URL";
+import { messaging } from "../../../config/firebase";
+import { getToken } from "firebase/messaging";
+
 function Home() {
   const [items,setItems] = useState([])
   const navigate = useNavigate();
+  const [token,setToken]=useState(null);
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+     const newToken = await getToken(messaging, {vapidKey: "BHwPcMzoW0Bv8lPTjj20Wx8ZaxOkx8NXUfSz7yiRWFPH7D0vY5xRjnEWb-aALPtjdBYIAXiIH1aStQMVlobLVXs"});
+     console.log(newToken);
+      setToken(newToken);
+      axios.post(SERVER_URL + "/user/notification", {
+        token: newToken,
+      },{
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+    } else if (permission === "denied") {
+      alert("you have denied the permission");
+    }
+  }
+  useEffect(() => {
+    //req notification permission
+    requestPermission();
+  }, []);
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -34,8 +59,8 @@ function Home() {
               setItems(res.data.items)
             }
             })
-            .catch(() => {
-              localStorage.removeItem("token");
+            .catch((error) => {
+              console.log("error",error)
             });
           }
         })
