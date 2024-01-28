@@ -12,7 +12,7 @@ const Notification = require('../models/Notification');
 const NotificationList = require('../models/NotificationList');
 const jwtSecret = process.env.ADMIN_JWT_SECRET
 const multer = require("multer");
-
+const axios = require('axios');
 // Register
 router.post('/register', async (req, res) => {
   try {
@@ -378,7 +378,11 @@ const OneImage = multer({
     fileSize: 20 * 1024 * 1024, // 20MB in bytes
   },
 });
-router.post("/send-notification",OneImage.single('image'),adminAuth,async(req,res)=>{
+
+
+
+
+router.post("/send-notification", OneImage.single('image'), adminAuth, async (req, res) => {
   try {
     const { title, url } = req.body;
     const imageObj = req.file;
@@ -386,55 +390,54 @@ router.post("/send-notification",OneImage.single('image'),adminAuth,async(req,re
     // Retrieve all tokens from the Notification model
     const allTokens = await Notification.find().distinct('token');
     if (!allTokens) {
-        throw new Error('No tokens found');
+      throw new Error('No tokens found');
     }
 
     // Build the payload
     const payload = {
-        registration_ids: allTokens,
-        notification: {
-            body: title,
-            title: "RTouch",
-            android_channel_id: "rtouch"
-        },
-        data: {
-            url: url,
-        },
+      registration_ids: allTokens,
+      notification: {
+        body: title,
+        title: "RTouch",
+        android_channel_id: "rtouch"
+      },
+      data: {
+        url: url,
+      },
     };
 
     // Add image property to data if imageObj exists
     if (imageObj) {
-        payload.notification.image = `${process.env.DOMAIN}/OneImage/${imageObj.filename}`;
+      payload.notification.image = `${process.env.DOMAIN}/OneImage/${imageObj.filename}`;
     }
 
     console.log(JSON.stringify(payload));
 
-    const result = await fetch('https://fcm.googleapis.com/fcm/send', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `key=${process.env.FIREBASE_SERVER_KEY}`,
-        },
-        body: JSON.stringify(payload),
+    const result = await axios.post('https://fcm.googleapis.com/fcm/send', payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `key=${process.env.FIREBASE_SERVER_KEY}`,
+      },
     });
 
-    const data = await result.json();
+    const data = result.data;
 
     // Check for errors in the HTTP response
-    if (!result.ok) {
-        throw new Error(`FCM request failed with status ${result.status}: ${data}`);
+    if (result.status !== 200) {
+      throw new Error(`FCM request failed with status ${result.status}: ${JSON.stringify(data)}`);
     }
 
     const date = new Date().toString().trim("T");
 
-    // Use Promise.all to await both the fetch and the creation of NotificationList concurrently
+    // Use Promise.all to await both the axios request and the creation of NotificationList concurrently
     await Promise.all([
-        NotificationList.create({ title: title, image: imageObj ? `${process.env.DOMAIN}/OneImage/${imageObj.filename}` : null, url: url, date: date }),
-        res.status(200).json({ message: 'Notification sent successfully', data }),
+      NotificationList.create({ title: title, image: imageObj ? `${process.env.DOMAIN}/OneImage/${imageObj.filename}` : null, url: url, date: date }),
+      res.status(200).json({ message: 'Notification sent successfully', data }),
     ]);
-} catch (error) {
+  } catch (error) {
     console.error('Error sending message:', error);
     res.status(500).json({ error: 'Internal Server Error' });
-}
-})
+  }
+});
+
 module.exports = router;
