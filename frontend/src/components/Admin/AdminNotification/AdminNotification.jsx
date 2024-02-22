@@ -10,7 +10,7 @@ function AdminNotification() {
   const [message, setMessage] = useState("");
   const [url, setUrl] = useState("");
 
-  useEffect(() => {
+  useEffect(()=>{
     if (!localStorage.getItem("admin-token")) {
       navigate("/login");
     } else {
@@ -23,15 +23,14 @@ function AdminNotification() {
         .then((res) => {
           if (res.status !== 200) {
             navigate("/login");
-            localStorage.removeItem("token");
+            localStorage.removeItem("admin-token");
           }
         })
         .catch(() => {
-          localStorage.removeItem("token");
+          localStorage.removeItem("admin-token");
         });
     }
-  }, [navigate]);
-
+  },[navigate])
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -68,7 +67,7 @@ function AdminNotification() {
             <h2 className="text-2xl font-bold text-gray-200 mb-4">
               Add Notification
             </h2>
-            <div className="max-w-sm mx-auto">
+            <div className="max-w-sm mx-auto my-4">
               <label
                 htmlFor="message"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -84,7 +83,7 @@ function AdminNotification() {
                 placeholder="Leave a comment..."
               />
             </div>
-            <div className="max-w-sm mx-auto">
+            <div className="max-w-sm mx-auto my-4">
               <label
                 htmlFor="url"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -100,7 +99,7 @@ function AdminNotification() {
                 placeholder="example.com"
               />
             </div>
-            <div className="max-w-lg mx-auto">
+            <div className="max-w-lg mx-auto my-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 htmlFor="user_avatar"
@@ -108,17 +107,17 @@ function AdminNotification() {
                 Upload Image
               </label>
               <input
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 id="user_avatar"
                 type="file"
                 onChange={handleFileChange}
               />
             </div>
-            <div className="max-w-lg mx-auto">
+            <div className="max-w-lg mx-auto my-5">
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="text-white my-5 w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 Submit
               </button>

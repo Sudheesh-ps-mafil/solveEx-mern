@@ -11,6 +11,17 @@
   background: var(--secondary-color);
   position: relative;
 }
+@media (min-width:768px) and (max-width:1200px){
+    .box{
+        width: 50%;
+    }
+    .bottom-nav{
+        width: 50% !important;
+    }
+    .top-nav{
+      width:50% !important;
+    }
+}
 @media  (max-width: 768px) {
   .box{
     width: 100%;

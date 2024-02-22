@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import AdminNavbar from "../AdminNavbar/AdminNavbar";
-import "./AdminDashboard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams} from "react-router-dom";
 import axios from "axios";
 import SERVER_URL from "../../../config/SERVER_URL";
-function AdminDashboard() {
+function AdminBookingCode() {
   const [bookingCode, setBookingCode] = useState("");
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const [bookingDetails,setBookingDetails] = useState({});
   const [userId,setUserId] = useState("");
+  const {code} = useParams()
+
   useEffect(()=>{
     if (!localStorage.getItem("admin-token")) {
       navigate("/login");
@@ -24,6 +25,9 @@ function AdminDashboard() {
           if (res.status !== 200) {
             navigate("/login");
             localStorage.removeItem("admin-token");
+          }else{
+            setBookingCode(code);
+            console.log(code)
           }
         })
         .catch(() => {
@@ -98,4 +102,4 @@ setUserId(res.data[0]?.userId)
   );
 }
 
-export default AdminDashboard;
+export default AdminBookingCode;

@@ -8,7 +8,7 @@ function AdminNavbar() {
       <div  className={`admin-navbar ${show && "active"}`}>
         <ul>
             <li>
-                <Link to="/admin/dashboard">Dashboard</Link>
+                <Link to="/admin/dashboard">Booking Verify</Link>
             </li>
             <li>
                 <Link to="/admin/redeem-code">Coupon</Link>
@@ -20,7 +20,10 @@ function AdminNavbar() {
                 <Link to="/admin/bookings">Bookings</Link>
             </li>
             <li>
-                <Link to="/admin/notification">Notifiaction</Link>
+                <Link to="/admin/notification">Notification</Link>
+            </li>
+            <li>
+                <Link to="/admin/add-items">Add Items</Link>
             </li>
         </ul>
         <i onClick={()=>setShow((prev)=>!prev)} className="fa-solid fa-bars"></i>

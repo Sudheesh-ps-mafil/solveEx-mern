@@ -11,7 +11,7 @@ function AdminCashbackCode() {
   const [bookingDetails, setBookingDetails] = useState({});
   const [userId, setUserId] = useState("");
 
-  useEffect(() => {
+  useEffect(()=>{
     if (!localStorage.getItem("admin-token")) {
       navigate("/login");
     } else {
@@ -24,14 +24,14 @@ function AdminCashbackCode() {
         .then((res) => {
           if (res.status !== 200) {
             navigate("/login");
-            localStorage.removeItem("token");
+            localStorage.removeItem("admin-token");
           }
         })
         .catch(() => {
-          localStorage.removeItem("token");
+          localStorage.removeItem("admin-token");
         });
     }
-  }, [navigate]);
+  },[navigate])
   function showCodeDetails() {
     axios
       .get(SERVER_URL + "/admin/redeem-code-info/" + bookingCode, {

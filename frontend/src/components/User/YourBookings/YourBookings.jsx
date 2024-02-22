@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SERVER_URL from "../../../config/SERVER_URL";
 import ReactModal from 'react-modal';
+import {QRCodeSVG} from 'qrcode.react';
+import CLIENT_URL from "../../../config/CLIENT_URL";
 function YourBookings() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [cancelId, setCancelId] = useState(null);
+  const [showQr, setShowQr] = useState(false);
+  const [qr, setQr] = useState(null);
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -95,6 +99,10 @@ function YourBookings() {
                           <p>₹ {card?.price}</p>
                           <p>{card?.date}</p>
                           <p>{card?.time}</p>
+                          <button className="btn-xs btn-success" onClick={() => (
+                            setShowQr(true),
+                            setQr(card?.code)
+                          )}>QR</button>
                         </div>
 
                         <div className="your-booking-card-right">
@@ -126,6 +134,21 @@ function YourBookings() {
           </div>
         </ReactModal>
       )}
+      {
+        showQr && (
+          <ReactModal
+            isOpen={showQr}
+            contentLabel="Confirmation Modal"
+            onRequestClose={() => setShowQr(false)}
+          >
+            <div className="model">
+              <p>QR Code</p>
+              <QRCodeSVG value={`${CLIENT_URL}/qrcode-booking/${qr}`} />
+              <button onClick={() => setShowQr(false)} className="btn-xs btn-success">Close</button>
+            </div>
+          </ReactModal>
+        )
+      }
 
     </>
   );
