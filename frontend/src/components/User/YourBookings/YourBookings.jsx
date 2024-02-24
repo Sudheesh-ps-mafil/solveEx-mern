@@ -129,8 +129,8 @@ function YourBookings() {
         >
           <div className="model">
             <p>Are you sure you want to cancel this booking?</p>
-            <button onClick={() => handleCancelConfirmation(cancelId)} className="btn-danger">Yes</button>
-            <button onClick={() => setShowModal(false)} className="btn-success">No</button>
+            <button onClick={() => handleCancelConfirmation(cancelId)} className="btn-danger p-3">Yes</button>
+            <button onClick={() => setShowModal(false)} className="btn-success p-3">No</button>
           </div>
         </ReactModal>
       )}
