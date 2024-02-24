@@ -40,8 +40,8 @@ function SingleBooking() {
                 setItem(res.data)
               }
               })
-              .catch(() => {
-                localStorage.removeItem("token");
+              .catch((err) => {
+                console.log(err);
               });
             }
           })

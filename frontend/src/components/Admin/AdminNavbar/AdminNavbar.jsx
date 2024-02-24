@@ -14,16 +14,25 @@ function AdminNavbar() {
                 <Link to="/admin/redeem-code">Coupon</Link>
             </li>
             <li>
-                <Link to="/admin/users">All Users</Link>
+                <Link to="/admin/all-users">All Users</Link>
             </li>
             <li>
-                <Link to="/admin/bookings">Bookings</Link>
+                <Link to="/admin/all-bookings">Bookings</Link>
             </li>
             <li>
                 <Link to="/admin/notification">Notification</Link>
             </li>
             <li>
                 <Link to="/admin/add-items">Add Items</Link>
+            </li>
+            <li>
+                <Link to="/admin/all-items">All Items</Link>
+            </li>
+            <li>
+                <Link to="/admin/add-cashback">Add Cashback</Link>
+            </li>
+            <li>
+                <Link to="/admin/all-cashback">All Cashback</Link>
             </li>
         </ul>
         <i onClick={()=>setShow((prev)=>!prev)} className="fa-solid fa-bars"></i>

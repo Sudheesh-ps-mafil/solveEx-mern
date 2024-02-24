@@ -37,8 +37,8 @@ function Booking() {
                   setOriginalItems(res.data.items);
                 }
               })
-              .catch(() => {
-                localStorage.removeItem("token");
+              .catch((err) => {
+                console.log(err);
               });
           }
         })

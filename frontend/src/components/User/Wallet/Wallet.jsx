@@ -48,8 +48,8 @@ function Wallet() {
                     });
                 }
               })
-              .catch(() => {
-                localStorage.removeItem("token");
+              .catch((err) => {
+                console.log(err);
               });
           }
         })

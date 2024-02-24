@@ -3,7 +3,7 @@ import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SERVER_URL from "../../../config/SERVER_URL";
-
+import { toast } from "react-toastify";
 function AdminNotification() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -49,8 +49,11 @@ function AdminNotification() {
         },
       })
       .then((res) => {
-        if (res.status === 200) {
-          navigate("/admin/notification");
+        if (res.status === 200 || res.status === 201) {
+          toast.success("Notification sent successfully");
+          setMessage("");
+          setUrl("");
+          setImage(null);
         }
       })
       .catch((err) => {

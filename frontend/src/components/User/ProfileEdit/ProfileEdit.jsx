@@ -35,10 +35,10 @@ function ProfileEdit() {
                       setUser(res.data.user)
                     }
                   }
-                  ).catch(()=>{
-                    localStorage.removeItem("token");
-
-                })
+                  ).catch((err)=>{
+                    
+                    console.log(err)
+                })  
               }
         }
         ).catch(()=>{

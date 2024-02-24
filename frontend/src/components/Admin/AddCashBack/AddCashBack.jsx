@@ -4,13 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SERVER_URL from "../../../config/SERVER_URL";
 import { toast } from "react-toastify";
-function AddItem() {
+function AddCashBack() {
   const navigate = useNavigate();
-  const [item, setItem] = useState({
+  const [cashBack, setCashBack] = useState({
     name: "",
-    price: 0,
-    description: "",
-    category: "",
     cashback: 0,
   });
   const [image, setImage] = useState(null);
@@ -45,26 +42,20 @@ function AddItem() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", image);
-    formData.append("name", item.name);
-    formData.append("price", item.price);
-    formData.append("description", item.description);
-    formData.append("category", item.category);
-    formData.append("cashback", item.cashback);
+    formData.append("name", cashBack.name);
+    formData.append("cashback", cashBack.cashback);
 
     axios
-      .post(SERVER_URL + "/admin/items", formData, {
+      .post(SERVER_URL + "/admin/cashback", formData, {
         headers: {
           "x-access-token": localStorage.getItem("admin-token"),
         },
       })
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
-          toast.success("Item Added Successfully");
-          setItem({
+          toast.success("Cashback Added Successfully");
+          setCashBack({
             name: "",
-            price: 0,
-            description: "",
-            category: "",
             cashback: 0,
           });
           setImage(null);
@@ -78,10 +69,10 @@ function AddItem() {
   return (
     <div className="admin-container">
       <AdminNavbar />
-      <div className="notification-container my-24 flex flex-col items-center justify-center">
+      <div className="notification-container my-10 flex flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center h-screen dark w-96">
           <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-200 mb-4">Add Item</h2>
+            <h2 className="text-2xl font-bold text-gray-200 mb-4">Add CashBack</h2>
             <div className="max-w-sm mx-auto my-4">
               <label
                 htmlFor="name"
@@ -92,28 +83,13 @@ function AddItem() {
               <input
                 type="text"
                 id="name"
-                onChange={(e) => setItem({ ...item, name: e.target.value })}
-                value={item.name}
+                onChange={(e) => setCashBack({ ...cashBack, name: e.target.value })}
+                value={cashBack.name}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="example"
               />
             </div>
-            <div className="max-w-sm mx-auto my-4">
-              <label
-                htmlFor="price"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Price
-              </label>
-              <input
-                type="number"
-                id="price"
-                onChange={(e) => setItem({ ...item, price: e.target.value })}
-                value={item.price}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="example"
-              />
-            </div>
+         
             <div className="max-w-sm mx-auto my-4">
               <label
                 htmlFor="number"
@@ -124,47 +100,13 @@ function AddItem() {
               <input
                 type="number"
                 id="cashback"
-                onChange={(e) => setItem({ ...item, cashback: e.target.value })}
-                value={item.cashback}
+                onChange={(e) => setCashBack({ ...cashBack, cashback: e.target.value })}
+                value={cashBack.cashback}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="example"
               />
             </div>
-            <div className="max-w-sm mx-auto my-4">
-              <label
-                htmlFor="category"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-               Category
-              </label>
-              <input
-                type="text"
-                id="category"
-                onChange={(e) => setItem({ ...item, category: e.target.value })}
-                value={item.category}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="example"
-              />
-            </div>
-            <div className="max-w-sm mx-auto my-4">
-              <label
-                htmlFor="description"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Description
-              </label>
-              <textarea
-                onChange={(e) =>
-                  setItem({ ...item, description: e.target.value })
-                }
-                value={item.description}
-                id="description"
-                rows={4}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Leave a comment..."
-              />
-            </div>
-
+         
             <div className="max-w-lg mx-auto my-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -195,4 +137,4 @@ function AddItem() {
   );
 }
 
-export default AddItem;
+export default AddCashBack;

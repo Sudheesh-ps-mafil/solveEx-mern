@@ -3,35 +3,13 @@ import AdminNavbar from "../AdminNavbar/AdminNavbar";
 import SERVER_URL from "../../../config/SERVER_URL";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-function AllUsers() {
-  const [users, setUsers] = useState([]);
+function AllBookings() {
+  const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
-  const handlePageChange = (value) => {
-    // Ensure that the value is within the valid range
-    const newPage = Math.max(1, Math.min(value, totalPage));
-
-    // Update the page state
-    setPage(newPage);
-  };
-  useEffect(() => {
-    axios
-      .get(SERVER_URL + "/admin/get-all-bookings?page=" + page + "&limit=10", {
-        headers: {
-          "x-access-token": localStorage.getItem("admin-token"),
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setBookings(res.data.bookings);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [page]);
   useEffect(() => {
     if (!localStorage.getItem("admin-token")) {
       navigate("/login");
@@ -48,14 +26,14 @@ function AllUsers() {
             localStorage.removeItem("admin-token");
           } else {
             axios
-              .get(SERVER_URL + "/admin/get-all-users?page=1&limit=10", {
+              .get(SERVER_URL + "/admin/get-all-bookings?page=1&limit=10", {
                 headers: {
                   "x-access-token": localStorage.getItem("admin-token"),
                 },
               })
               .then((res) => {
                 if (res.status === 200) {
-                  setUsers(res.data.users);
+                  setBookings(res.data.bookings);
                 }
               })
               .catch((error) => {
@@ -68,21 +46,51 @@ function AllUsers() {
         });
     }
   }, [navigate]);
-  const handleDelete = (id) => {
+  useEffect(() => {
     axios
-      .delete(SERVER_URL + "/admin/delete-user/" + id, {
+      .get(SERVER_URL + "/admin/get-all-bookings?page=" + page + "&limit=10", {
         headers: {
           "x-access-token": localStorage.getItem("admin-token"),
         },
       })
       .then((res) => {
         if (res.status === 200) {
-          window.location.reload();
+          setBookings(res.data.bookings);
         }
       })
       .catch((error) => {
         console.log(error);
       });
+  }, [page]);
+  const VerifyCode = (bookingCode, userId) => {
+    axios
+      .post(
+        SERVER_URL + "/admin/verify-item-code",
+        {
+          code: bookingCode,
+          userId: userId,
+        },
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("admin-token"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Code Verified");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handlePageChange = (value) => {
+    // Ensure that the value is within the valid range
+    const newPage = Math.max(1, Math.min(value, totalPage));
+
+    // Update the page state
+    setPage(newPage);
   };
   return (
     <>
@@ -93,40 +101,62 @@ function AllUsers() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
+                  Item Name
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Email
+                  Date
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  PhoneNumber
+                  Time
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Delete
+                  Price
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Verify
                 </th>
               </tr>
             </thead>
             <tbody>
-              {users?.map((user) => (
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {user?.name}
-                  </th>
-                  <td className="px-6 py-4">{user?.email}</td>
-                  <td className="px-6 py-4">{user?.phoneNumber}</td>
-                  <td className="px-6 py-4">
-                    <p
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
-                      onClick={() => handleDelete(user?._id)}
+              {bookings?.map((book) =>
+                book?.booked?.map((item) => (
+                  <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      Delete
-                    </p>
-                  </td>
-                </tr>
-              ))}
+                      {item?.name}
+                    </th>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {book?.name}
+                    </th>
+                    <td className="px-6 py-4">{item?.date}</td>
+                    <td className="px-6 py-4">{item?.time}</td>
+                    <td className="px-6 py-4">{item?.price}</td>
+
+                    <td className="px-6 py-4">
+                      {!item?.verified ? (
+                        <p
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                          onClick={() => VerifyCode(item?.code, book?._id)}
+                        >
+                          Verify
+                        </p>
+                      ) : (
+                        <p className="font-medium text-green-600 dark:text-green-600 hover:underline cursor-pointer">
+                          Verified
+                        </p>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
           <nav aria-label="Page navigation example p-4 m-4">
@@ -155,4 +185,4 @@ function AllUsers() {
   );
 }
 
-export default AllUsers;
+export default AllBookings;

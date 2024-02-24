@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
 var path = require('path');
+const morgan = require("morgan");
+app.use(morgan("dev"));
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
     console.log('Connected to MongoDB');
