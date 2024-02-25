@@ -96,9 +96,9 @@ function SingleBooking() {
                         <div className="single-booking-content-bottom">
                           
                     <p>Pick Date</p>
-                        <input type="date" onChange={(e)=>setBooking((prev) => ({ ...prev, date: e.target.value }))} value={booking.date}/>
+                        <input type="date" className='text-black' onChange={(e)=>setBooking((prev) => ({ ...prev, date: e.target.value }))} value={booking.date}/>
                     <p>Pick Time</p>
-                        <input type="time" onChange={(e)=>setBooking((prev) => ({ ...prev, time: e.target.value }))} value={booking.time}/>
+                        <input type="time" className='text-black' onChange={(e)=>setBooking((prev) => ({ ...prev, time: e.target.value }))} value={booking.time}/>
                         
                         <button onClick={handleBooking}>Book Now</button>
                         </div>
