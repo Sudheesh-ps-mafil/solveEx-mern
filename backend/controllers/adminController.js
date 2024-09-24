@@ -6,7 +6,7 @@ const Notification = require('../models/Notification');
 const NotificationList = require('../models/NotificationList');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin');
+const Admin = require('../models/Admin');   
 
 const jwtSecret = process.env.ADMIN_JWT_SECRET
 const Register = async (req, res) => {
