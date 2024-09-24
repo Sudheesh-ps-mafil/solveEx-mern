@@ -27,6 +27,7 @@ margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    color: black;
 }
 .profile-edit-body-left-input label{
     margin-top: 20px;
